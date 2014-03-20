@@ -3,7 +3,12 @@ function initEditMovie() {
 
 	for (var i in elems) {
 		$('#' + elems[i]).change(function() {
-			$('.' + this.id).html(this.value);
+			if (this.id == 'pressRating' || this.id == 'userRating') {
+				var rating = $('<div>').attr('class', 'rating').append($('<div>').attr({'class': 'rate', 'style': 'width:' + (this.value * 20) + '%'}));
+				$('.' + this.id).html(rating).append($('<span>').text('(' + this.value + ')'));
+			} else {
+				$('.' + this.id).html(this.value);
+			}
 		});
 	}
 
@@ -12,7 +17,12 @@ function initEditMovie() {
 			for (var i in elems) {
 				if (data[elems[i]] && !$('#' + elems[i]).val()) {
 					$('#' + elems[i]).val(data[elems[i]]);
-					$('.' + elems[i]).html(data[elems[i]]);
+					if (elems[i] == 'pressRating' || elems[i] == 'userRating') {
+						var rating = $('<div>').attr('class', 'rating').append($('<div>').attr({'class': 'rate', 'style': 'width:' + (data[elems[i]] * 20) + '%'}));
+						$('.' + elems[i]).append(rating).append($('<span>').text('(' + data[elems[i]] + ')'));
+					} else {
+						$('.' + elems[i]).html(data[elems[i]]);
+					}
 				}
 			}
 		});

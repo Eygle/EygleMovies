@@ -70,8 +70,24 @@ if ($movie['allocineId']) {
 		<div class="line"><div class="label">Date de sortie</div><div class="releaseDate"><?php if ($movie['releaseDate']) echo $movie['releaseDate'];?></div></div>
 		<div class="line"><div class="label">Réalisteurs</div><div class="directors"><?php if ($movie['directors']) echo $movie['directors'];?></div></div>
 		<div class="line"><div class="label">Acteurs</div><div class="actors"><?php if ($movie['actors']) echo $movie['actors'];?></div></div>
-		<div class="line"><div class="label">Note de la presse</div><div class="pressRating"><?php if ($movie['pressRating']) echo $movie['pressRating'];?></div></div>
-		<div class="line"><div class="label">Note des utilisateurs</div><div class="userRating"><?php if ($movie['userRating']) echo $movie['userRating'];?></div></div>
+		<div class="line">
+			<div class="label">Note de la presse</div><div class="pressRating">
+				<?php
+				if ($movie['pressRating']) {
+					echo '<div class="rating"><div class="rate" style="width:'.($movie['pressRating'] * 20).'%;"></div></div><span>('.$movie['pressRating'].')</span>';
+				}
+				?>
+			</div>
+		</div>
+		<div class="line">
+			<div class="label">Note des utilisateurs</div><div class="userRating">
+				<?php
+				if ($movie['userRating']) {
+					echo '<div class="rating"><div class="rate" style="width:'.($movie['userRating'] * 20).'%;"></div></div><span>('.$movie['userRating'].')</span>';
+				}
+				?>
+			</div>
+		</div>
 	</div>
 	<div class="synopsis"><?php if (isset($movie['synopsis']) && $movie['synopsis']) echo $movie['synopsis'];?></div>
 </div>

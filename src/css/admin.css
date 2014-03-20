@@ -72,3 +72,23 @@ textarea {
 .originalTitle {
 	color: grey;
 }
+
+.rating {
+	width: 100px;
+	height: 17px;
+	background: url('../images/star-grey.png') repeat-x;
+	display: inline-block;
+}
+
+.rate {
+	height: 17px;
+	background: url('../images/star-colored.png') repeat-x;
+}
+
+.pressRating span, .userRating span {
+	font-size: 0.8em;
+	line-height: 17px;
+	vertical-align: top;
+	color: grey;
+	margin-left: 5px;
+}
