@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EygleMovies" default="">
+
+
+	<target name="init.properties">
+		<buildnumber />
+		<property name="local.www.dir" value="/var/www/local.eygle-movie" />
+		<property name="build.dir" value="build" />
+
+	</target>
+
+
+	<target name="init" depends="init.properties">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+
+	<target name="clean" description="Cleanup build artifacts" depends="init">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="prepare" depends="clean" description="Prepare for build">
+		<mkdir dir="${basedir}/build/src" />
+
+		<copy todir="${basedir}/build/src">
+			<fileset dir="${basedir}/src">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="publish.locally" depends="prepare">
+		<delete dir="${local.www.dir}">
+			<include name="**/**" />
+		</delete>
+		<copy todir="${local.www.dir}">
+			<fileset dir="${basedir}/src">
+				<include name="**/**" />
+			</fileset>
+		</copy>
+	</target>
+</project>

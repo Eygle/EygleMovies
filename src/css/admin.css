@@ -1,0 +1,74 @@
+h1, h2, h3 {
+	text-align: center;
+}
+
+#admin-form, #admin-form-view {
+	display: inline-block;
+	width: 50%;
+	vertical-align: top;
+}
+
+.line {
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.left {
+	display: inline-block;
+	width: 35%;
+	padding-left: 10px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+.right {
+	display: inline-block;
+	width: 65%;
+	text-align: center;
+}
+
+input, textarea {
+	width: 80%;
+}
+
+textarea {
+	height: 200px;
+}
+
+.poster {
+	display: inline-block;
+	width: 20%;
+	vertical-align: top;
+}
+
+.poster img {
+	max-width: 80%;
+}
+
+.infos {
+	display: inline-block;
+	vertical-align: top;
+	width: 80%;
+}
+
+.title, .originalTitle, .releaseDate, .actors, .directors, .pressRating, .userRating {
+	display: inline-block;
+	vertical-align: top;
+	width: 80%;
+	padding-left: 20px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+.label {
+	width: 20%;
+	color: grey;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.originalTitle {
+	color: grey;
+}
