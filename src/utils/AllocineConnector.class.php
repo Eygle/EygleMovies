@@ -99,6 +99,9 @@ class AllocineConnector {
 			$res->releaseDate = $movie['productionYear'].'-01-01';
 		else if (isset($movie['dvdReleaseDate']))
 			$res->releaseDate = $movie['dvdReleaseDate'];
+		if (strlen($res->releaseDate) < 10) {
+			$res->releaseDate .= '-01';
+		}
 		$genres = array();
 		foreach ($movie['genre'] as $v) {
 			$genres[] = $v['$'];

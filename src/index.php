@@ -43,8 +43,11 @@ foreach ($cssDependencies as $dep) {
 <div id="panel-left">
 	<div id="new-search-cntr">
 		<div id="new-search-caption">Nouvelle recherche</div>
-		<form>
+		<form method="get" action="index.php">
 		<div class="btn-bar">
+			<div class="btn-bar-wrapper">
+				<button onclick="window.location = 'index.php';return false;">Reset</button>
+			</div>
 			<div class="btn-bar-wrapper">
 				<button type="submit">Search</button>
 			</div>
@@ -83,18 +86,23 @@ foreach ($cssDependencies as $dep) {
 		</form>
 	</div>
 </div><div id="table-cntr">
-	<div id="background"></div>
-	<div id="movieInfos">
-		<div class="poster"></div><div class="infos">
-			<div class="line"><div class="label">Titre</div><div class="title"></div></div>
-			<div class="line"><div class="label">Titre original</div><div class="originalTitle"></div></div>
-			<div class="line"><div class="label">Date de sortie</div><div class="releaseDate"></div></div>
-			<div class="line"><div class="label">Réalisteurs</div><div class="directors"></div></div>
-			<div class="line"><div class="label">Acteurs</div><div class="actors"></div></div>
-			<div class="line"><div class="label">Note de la presse</div><div class="pressRating"></div></div>
-			<div class="line"><div class="label">Note des utilisateurs</div><div class="userRating"></div></div>
+	<div id="hidden-cover-div">
+		<div id="background"></div>
+		<div id="movieInfos">
+			<div id="close">X</div>
+			<div class="poster"></div><div class="infos">
+				<div class="line"><div class="label">Titre</div><div class="info title"></div></div>
+				<div class="line"><div class="label">Titre original</div><div class="info originalTitle"></div></div>
+				<div class="line"><div class="label">Date de sortie</div><div class="info releaseDate"></div></div>
+				<div class="line"><div class="label">Réalisteurs</div><div class="info directors"></div></div>
+				<div class="line"><div class="label">Acteurs</div><div class="info actors"></div></div>
+				<div class="line"><div class="label">Genres</div><div class="info genres"></div></div>
+				<div class="line"><div class="label">Note de la presse</div><div class="info pressRating"></div></div>
+				<div class="line"><div class="label">Note des utilisateurs</div><div class="info userRating"></div></div>
+			</div>
+			<div class="synopsis"></div>
+			<a class="edit">Editer</a>
 		</div>
-		<div class="synopsis"></div>
 	</div>
 	<div id="table-header">
 		<div class="table-header-elem">Résultats : <?php echo $search->getTotalResults();?></div>
@@ -102,6 +110,7 @@ foreach ($cssDependencies as $dep) {
 			if ($search->getNbrPages() > 1)
 				echo $search->generatePagination();
 		?>
+		</div>
 		<div id="table-wrapper">
 			<div id="search-content">
 				<?php

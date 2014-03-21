@@ -18,11 +18,11 @@ class DBMovies extends DAO {
 		$stmt = $this->pdo->prepare('
 			SELECT m.*, YEAR(releaseDate) AS year FROM movies AS m
 			'.($genres ? 'LEFT JOIN movies_genres AS mg ON m.id = mg.movieId WHERE mg.genreId IN('.$genres.')' : '').'
-			'.($search ? ($genres ? 'AND ' : 'WHERE ').'LOWER(title) LIKE :title' : '').'
+			'.($search ? ($genres ? 'AND ' : 'WHERE ').'LOWER(title) LIKE :title OR LOWER(originalTitle) LIKE :title' : '').'
 			ORDER BY title
 			LIMIT '.$from.', '.$nbr.'
 			');
-		$stmt->execute(array('title' => "$search%"));
+		$stmt->execute(array('title' => "%$search%"));
 		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($res as $i=>$v) {
 			$stmt = $this->pdo->prepare('SELECT g.* FROM movies_genres AS mg
@@ -51,9 +51,9 @@ class DBMovies extends DAO {
 	public function getTotalMovies($search, $genres, $from, $nbr) {
 		$stmt = $this->pdo->prepare('SELECT COUNT(*) AS tot FROM movies AS m
 			'.($genres ? 'LEFT JOIN movies_genres AS mg ON m.id = mg.movieId WHERE mg.genreId IN('.$genres.')' : '').'
-			'.($search ? ($genres ? 'AND ' : 'WHERE ').'LOWER(title) LIKE :title' : '')
+			'.($search ? ($genres ? 'AND ' : 'WHERE ').'LOWER(title) LIKE :title OR LOWER(originalTitle) LIKE :title' : '')
 			);
-		$stmt->execute(array('title' => "$search%"));
+		$stmt->execute(array('title' => "%$search%"));
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
 		return $res['tot'];
 	}
@@ -83,9 +83,9 @@ class DBMovies extends DAO {
 			else
 				$directors[] = $v['name'];
 		}
-		$res['genres'] = implode(',', $genres);
-		$res['directors'] = implode(',', $directors);
-		$res['actors'] = implode(',', $actors);
+		$res['genres'] = implode(', ', $genres);
+		$res['directors'] = implode(', ', $directors);
+		$res['actors'] = implode(', ', $actors);
 		return $res;
 	}
 
@@ -208,6 +208,7 @@ class DBMovies extends DAO {
 	
 	public function insertPeople($movieId, $arr, $role) {
 		foreach ($arr as $v) {
+			$v = trim($v);
 			$stmt = $this->pdo->prepare('SELECT id FROM people WHERE name LIKE :name');
 			$stmt->execute(array('name'=>$v));
 			$res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -226,6 +227,7 @@ class DBMovies extends DAO {
 	
 	public function insertGenres($movieId, $arr) {
 		foreach ($arr as $v) {
+			$v = trim($v);
 			$stmt = $this->pdo->prepare('SELECT id FROM genres WHERE name LIKE :name');
 			$stmt->execute(array('name'=>$v));
 			$res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -239,5 +241,11 @@ class DBMovies extends DAO {
 			$stmt = $this->pdo->prepare('INSERT IGNORE INTO movies_genres(movieId, genreId) VALUES(:mId, :gId)');
 			$stmt->execute(array('mId' => $movieId, 'gId' => $id));
 		}
+	}
+
+	public function getAllPosters() {
+		$stmt = $this->pdo->prepare('SELECT id, poster, title, originalTitle FROM movies WHERE poster IS NOT NULL');
+		$stmt->execute();
+		return $stmt->fetchAll();
 	}
 }

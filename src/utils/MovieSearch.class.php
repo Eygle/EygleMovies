@@ -11,6 +11,8 @@ class MovieSearch {
 
 	private $total;
 
+	const NBR_PAGES_ARROUND_SELECTED = 5;
+
 	public function __construct($db, $genres) {
 		$this->db = $db;
 		if (isset($_GET['page'])) {
@@ -37,6 +39,55 @@ class MovieSearch {
 	}
 
 	public function generatePagination() {
+		$nbrPages = ceil($this->total / $this->resPerPage);	
+		if ($nbrPages < 2)
+			return "";
+		$genres = explode(',', $this->genreFilter);
+		$search = isset($_GET['search']) ? $_GET['search'] : '';
+		$url = "?search=".$search;
+		foreach ($genres as $g) {
+			$url .= "&genre_$g=on";
+		}
+		$pages = array();
+
+		if ($this->page > 1) {
+			$pages[] = array('<<', 1);
+			$pages[] = array('<', $this->page - 1);
+		}
+		for ($i = $this->page - MovieSearch::NBR_PAGES_ARROUND_SELECTED; $i < $this->page && $i <= $nbrPages; $i++) {
+			if ($i < 1)
+				continue;
+			if ($i == $this->page - MovieSearch::NBR_PAGES_ARROUND_SELECTED && $i > 1) {
+				$pages[] = array('...', null);
+			} else {
+				$pages[] = array($i, $i);
+			}
+		}
+		$pages[] = array($i, null);
+		for ($i = $this->page + 1; $i < $this->page + MovieSearch::NBR_PAGES_ARROUND_SELECTED && $i <= $nbrPages; $i++) {
+			$pages[] = array($i, $i);
+			if ($i == $this->page + (MovieSearch::NBR_PAGES_ARROUND_SELECTED - 1) && $i < $nbrPages) {
+				$pages[] = array('...', null);
+				$i++;
+			}
+		}
+		if ($this->page < $nbrPages) {
+			$pages[] = array('>', $this->page + 1);
+			$pages[] = array('>>', $nbrPages);
+		}
+		$ret = '<div class="pagination">';
+		foreach ($pages as $p) {
+			$ret .= '<div class="page';
+			if (isset($p[1]))
+				$ret .= '"><a href="'.$url.'&page='.$p[1].'">'.$p[0].'</a></div>';
+			else
+				$ret.= ' selected">'.$p[0].'</div>';
+		}
+		$ret .= '</div>';
+		return $ret;
+	}
+
+	public function generatePagination2() {
 		$nbrPages = ceil($this->total / $this->resPerPage);
 		if ($nbrPages < 2)
 			return "";

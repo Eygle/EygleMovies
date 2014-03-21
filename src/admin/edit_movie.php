@@ -21,14 +21,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	if ($genres) $db->insertGenres($_POST['movieId'], $genres);
 	//if ($_GET['previousAction'] == 'multiple')
 	// 	$db->removeMultiplesMovies($_POST['movieId']);
-	header('Location: admin.php?action='.$_GET['previousAction']);
+	if ($_GET['previousAction'] == 'view')
+		header('Location: index.php');
+	else
+		header('Location: admin.php?action='.$_GET['previousAction']);
 }
 
 if ($_GET['previousAction'] == 'multiple')
 	$movie = $db->getMovieMult($_GET['movieId']);
-else
-	$movie = $db->getMovie($_GET['movieId']);
+else {
+	$movie = $db->getMovieInfos($_GET['movieId']);
+	$movie['movieId'] = $movie['id'];
+}
 ?>
+
+<div id="erase">Vider les champs</div>
 
 <h2><?php echo $movie['file']; ?></h2>
 
@@ -38,7 +45,7 @@ if ($movie['allocineId']) {
 }
 ?>
 
-<div id="autocomplete-allocine"><input type="text" id="search-allocineId" /> <input type="submit" value="search" id="searchAllocineId" /></div>
+<div id="autocomplete-allocine"><input type="text" id="search-allocineId" <?php if ($movie['allocineId']) echo 'value="'.$movie['allocineId'].'"';?> /> <input type="submit" value="search" id="searchAllocineId"/></div>
 
 <div id="admin-form">
 	<form method="post">
@@ -105,13 +112,14 @@ if ($movie['allocineId']) {
 	</form>
 </div><div id="admin-form-view">
 	<div class="poster"><?php if ($movie['poster']) echo '<img src="'.$movie['poster'].'" />';?></div><div class="infos">
-		<div class="line"><div class="label">Titre</div><div class="title"><?php if ($movie['title']) echo $movie['title'];?></div></div>
-		<div class="line"><div class="label">Titre original</div><div class="originalTitle"><?php if ($movie['originalTitle']) echo $movie['originalTitle'];?></div></div>
-		<div class="line"><div class="label">Date de sortie</div><div class="releaseDate"><?php if ($movie['releaseDate']) echo $movie['releaseDate'];?></div></div>
-		<div class="line"><div class="label">Réalisteurs</div><div class="directors"><?php if (isset($movie['directors']) && $movie['directors']) echo $movie['directors'];?></div></div>
-		<div class="line"><div class="label">Acteurs</div><div class="actors"><?php if (isset($movie['actors']) && $movie['actors']) echo $movie['actors'];?></div></div>
+		<div class="line"><div class="label">Titre</div><div class="info title"><?php if ($movie['title']) echo $movie['title'];?></div></div>
+		<div class="line"><div class="label">Titre original</div><div class="info originalTitle"><?php if ($movie['originalTitle']) echo $movie['originalTitle'];?></div></div>
+		<div class="line"><div class="label">Date de sortie</div><div class="info releaseDate"><?php if ($movie['releaseDate']) echo $movie['releaseDate'];?></div></div>
+		<div class="line"><div class="label">Réalisteurs</div><div class="info directors"><?php if (isset($movie['directors']) && $movie['directors']) echo $movie['directors'];?></div></div>
+		<div class="line"><div class="label">Acteurs</div><div class="info actors"><?php if (isset($movie['actors']) && $movie['actors']) echo $movie['actors'];?></div></div>
+		<div class="line"><div class="label">Genres</div><div class="info genres"><?php if (isset($movie['genres']) && $movie['genres']) echo $movie['genres'];?></div></div>
 		<div class="line">
-			<div class="label">Note de la presse</div><div class="pressRating">
+			<div class="label">Note de la presse</div><div class="info pressRating">
 				<?php
 				if ($movie['pressRating']) {
 					echo '<div class="rating"><div class="rate" style="width:'.($movie['pressRating'] * 20).'%;"></div></div><span>('.$movie['pressRating'].')</span>';
@@ -120,7 +128,7 @@ if ($movie['allocineId']) {
 			</div>
 		</div>
 		<div class="line">
-			<div class="label">Note des utilisateurs</div><div class="userRating">
+			<div class="label">Note des utilisateurs</div><div class="info userRating">
 				<?php
 				if ($movie['userRating']) {
 					echo '<div class="rating"><div class="rate" style="width:'.($movie['userRating'] * 20).'%;"></div></div><span>('.$movie['userRating'].')</span>';
@@ -134,7 +142,7 @@ if ($movie['allocineId']) {
 
 
 <script>
-	var allocineId = <?php echo isset($_GET['allocineId']) ? $_GET['allocineId'] : 'null';?>;
+	var allocineId = null; //<?php echo isset($_GET['allocineId']) ? $_GET['allocineId'] : 'null';?>;
 
 	$(document).ready(function() {
 		initEditMovie();

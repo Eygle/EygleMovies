@@ -252,7 +252,8 @@ class HTTPClient {
 
 	public function downloadFile($url, $out) {
 		if (self::CURL_ENABLED && function_exists('curl_init')) {
-			$fp = fopen (".$out", 'w+');
+			echo 'in curl';
+			$fp = fopen ("$out", 'w+');
 			$ch = curl_init($url);
 
 			curl_setopt($ch, CURLOPT_TIMEOUT, 6);
@@ -285,7 +286,10 @@ class HTTPClient {
 			curl_close ($ch);
 		}
 		else {
-			$result= file_get_contents($url);
+			echo 'in else';
+			$fp = fopen ("$out", 'w+');
+			fwrite($fp, file_get_contents($url));
+			fclose($fp);
 		}
 		return $result;
 	}

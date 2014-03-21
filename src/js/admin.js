@@ -22,16 +22,27 @@ function initEditMovie() {
 	$('#searchAllocineId').click(function() {
 		searchAllocineInfos($('#search-allocineId').val());
 	});
+
+	$('#erase').click(function() {
+		eraseValues();
+	});
+}
+
+function eraseValues() {
+	for (var i in elems) {
+		$('#' + elems[i]).val("");
+		$('.' + elems[i]).html('');
+	}
 }
 
 function searchAllocineInfos(allocineId) {
 $.getJSON('admin/allocine_infos.php', {'allocineId': allocineId}, function(data) {
 		for (var i in elems) {
-			if (data[elems[i]] && !$('#' + elems[i]).val()) {
+			if (data[elems[i]]) {
 				$('#' + elems[i]).val(data[elems[i]]);
 				if (elems[i] == 'pressRating' || elems[i] == 'userRating') {
 					var rating = $('<div>').attr('class', 'rating').append($('<div>').attr({'class': 'rate', 'style': 'width:' + (data[elems[i]] * 20) + '%'}));
-					$('.' + elems[i]).append(rating).append($('<span>').text('(' + data[elems[i]] + ')'));
+					$('.' + elems[i]).html(rating).append($('<span>').text('(' + data[elems[i]] + ')'));
 				} else if (elems[i] == 'poster') {
 					$('.' + elems[i]).html('<img src="' + data[elems[i]] + ' " />');
 				} else {

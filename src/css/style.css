@@ -31,34 +31,16 @@ a:VISITED {
 	text-align: right;
 }
 
-#saved-searches-cntr,#new-search-cntr {
+#new-search-cntr {
 	padding: 5px;
 	margin: 5px;
 }
 
-#saved-searches-list {
-	list-style: none;
-	padding: 0;
-	margin: 5px;
-	font-size: 0.9rem;
-	display: table;
-	width: 100%;
-}
-
-#saved-searches-list>li {
-	display: table-row;
-	cursor: pointer;
-}
-
-#saved-searches-list :FIRST-CHILD {
-	padding-top: 0;
-}
-
-#saved-search-caption,#new-search-caption {
+#new-search-caption {
 	position: relative;
 }
 
-#saved-search-caption:AFTER,#new-search-caption:AFTER {
+#new-search-caption:AFTER {
 	content: '';
 	position: absolute;
 	height: 1px;
@@ -70,11 +52,9 @@ a:VISITED {
 }
 
 #panel-left {
-	position: fixed;
-	width: 400px;
-	top: 0;
-	bottom: 0;
-	left: 0;
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
 	-moz-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 	-webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
 	-o-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
@@ -83,25 +63,6 @@ a:VISITED {
 	z-index: 1;
 	box-sizing: border-box;
 	overflow: auto;
-}
-
-#collapse-filters-panel {
-	width: 24px;
-	height: 24px;
-	background: url('/images/double-arrow-left.png') center
-		center no-repeat;
-	display: inline-block;
-	vertical-align: middle;
-	cursor: pointer;
-}
-
-#panel-left.collapsed {
-	width: 29px;
-}
-
-#panel-left.collapsed #collapse-filters-panel {
-	background: url('/images/double-arrow-right.png') center
-		center no-repeat;
 }
 
 #filters-list {
@@ -219,34 +180,15 @@ a:VISITED {
 	min-width: 100px;
 }
 
-#filters-list input[type="text"],#filters-list input[type="email"],#filters-list input[type="password"],#filters-list select
+#filters-list input[type="text"],#filters-list select
 	{
 	min-width: 100px;
 	width: 100%;
 	box-sizing: border-box;
 }
 
-#filters-list  select[name='widgetGroupId']{
-	width: 69%;
-	display: block;
-	float : right;
-}
 
-#filters-list  select[name='widgetGroupOperator']{
-	width: auto;
-	min-width: initial;
-	display: block;
-	float: left;
-	margin-left: 0;
-	margin-right: 0;
-}
-
-#filters-list select[name="startDay"], #filters-list select[name="endDay"]{
-	width: initial;
-}
-
-
-#saved-searches-list .caption {
+.caption {
 	display: table-cell;
 	vertical-align: middle;
 	padding: 5px 0;
@@ -256,7 +198,7 @@ a:VISITED {
 	max-width: 340px;
 }
 
-#saved-searches-list .remove-btn {
+.remove-btn {
 	display: table-cell;
 	vertical-align: middle;
 	width: 16px;
@@ -267,10 +209,12 @@ a:VISITED {
 
 /* DATA table*/
 #table-cntr {
-	position: relative;
-	left: 400px;
+	display: inline-block;
+	vertical-align: top;
+	width: 75%;
 	padding : 10px;
-	width: 70%;
+	box-sizing: border-box;
+	position: relative;
 }
 
 #table-wrapper {
@@ -452,6 +396,8 @@ input[type="checkbox"] {
 	color: white;
 	margin-right: 5px;
 	padding: 5px;
+	min-width: 20px;
+	text-align: center;
 }
 
 .selected {
@@ -463,6 +409,7 @@ input[type="checkbox"] {
 	display: inline-block;
 	vertical-align: top;
 	margin: 5px;
+	cursor: pointer;
 }
 
 .search-result:hover {
@@ -501,26 +448,56 @@ input[type="checkbox"] {
 * Movie infos
 */
 
+#hidden-cover-div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+}
+
 #background {
 	position: absolute;
 	top: 0;
 	left: 0;
-	display: none;
 	background-color: black;
 	opacity: 0.7;
-	z-index: 1000;
 	width: 100%;
+	height: 100%;
 }
 
 #movieInfos {
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: none;
+	position: relative;
 	z-index: 2000;
-	width: 80%;
+	width: 70%;
+	padding: 25px;
 	margin: auto;
 	background-color: white;
+	border: 2px solid #ccc;
+}
+
+#movieInfos #close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: grey;
+	font-size: 1.3em;
+	cursor: pointer;
+}
+
+.edit {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	font-size: 0.8em;
+	color: grey;
+	cursor: pointer;
+}
+
+.line {
+	margin: 3px 0;
 }
 
 .poster {
@@ -539,7 +516,7 @@ input[type="checkbox"] {
 	width: 80%;
 }
 
-.title, .originalTitle, .releaseDate, .actors, .directors, .pressRating, .userRating {
+.info {
 	display: inline-block;
 	vertical-align: top;
 	width: 80%;
@@ -578,4 +555,8 @@ input[type="checkbox"] {
 	vertical-align: top;
 	color: grey;
 	margin-left: 5px;
+}
+
+.synopsis {
+	margin-top: 25px;
 }
