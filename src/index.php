@@ -11,6 +11,8 @@ $cssDependencies = array(
 );
 
 $jsDependencies = array(
+	'//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js',
+	'js/index.js'
 );
 
 $db  = new DBMovies();
@@ -81,6 +83,19 @@ foreach ($cssDependencies as $dep) {
 		</form>
 	</div>
 </div><div id="table-cntr">
+	<div id="background"></div>
+	<div id="movieInfos">
+		<div class="poster"></div><div class="infos">
+			<div class="line"><div class="label">Titre</div><div class="title"></div></div>
+			<div class="line"><div class="label">Titre original</div><div class="originalTitle"></div></div>
+			<div class="line"><div class="label">Date de sortie</div><div class="releaseDate"></div></div>
+			<div class="line"><div class="label">Réalisteurs</div><div class="directors"></div></div>
+			<div class="line"><div class="label">Acteurs</div><div class="actors"></div></div>
+			<div class="line"><div class="label">Note de la presse</div><div class="pressRating"></div></div>
+			<div class="line"><div class="label">Note des utilisateurs</div><div class="userRating"></div></div>
+		</div>
+		<div class="synopsis"></div>
+	</div>
 	<div id="table-header">
 		<div class="table-header-elem">Résultats : <?php echo $search->getTotalResults();?></div>
 		<?php
@@ -92,14 +107,14 @@ foreach ($cssDependencies as $dep) {
 				<?php
 				foreach ($movies as $m) {
 					if ($m['title']) {
-					echo '<a href=""><div class="search-result">
+					echo '<div class="search-result" id="'.$m['id'].'">
 						<div class="search-poster">
 							<img src="'.$m['poster'].'" />
 						</div><div class="search-infos">
 							<div class="search-title">'.$m['title'].'</div>
 							<div class="search-year">'.$m['year'].'</div>
 						</div>
-					</div></a>';
+					</div>';
 					} else {
 						echo '<a href=""><div class="search-result">
 							<div class="search-title">'.$m['file'].'</div>
@@ -116,5 +131,10 @@ foreach ($cssDependencies as $dep) {
 		echo '<script src="'.$dep.'"></script>';
 	}
 	?>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			initIndex();
+		});
+	</script>
 </body>
 </html>

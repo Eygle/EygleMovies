@@ -63,6 +63,7 @@ if (!isset($_GET['action'])) {
 			include 'admin/admin_mult.php';
 		break;
 		case 'noresults':
+			include 'admin/admin_noresult.php';
 		break;
 		case 'editMovie':
 			include 'admin/edit_movie.php';

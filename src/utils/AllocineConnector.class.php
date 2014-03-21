@@ -1,6 +1,7 @@
 <?php
 
 require_once "HTTPClient.class.php";
+require_once "simple_html_dom.php";
 
 class AllocineResult {
 	public $title = null;
@@ -71,6 +72,8 @@ class AllocineConnector {
 		
 		$movie = isset($json['movie']) ? $json['movie'] : null;
 		if (!$movie) return null;
+
+		$res = new AllocineResult();
 		
 		//var_dump($movie);
 
@@ -93,7 +96,7 @@ class AllocineConnector {
 		if (isset($movie['release']['releaseDate']))
 			$res->releaseDate = $movie['release']['releaseDate'];
 		else if (isset($movie['productionYear']))
-			$res->releaseDate = $movie['productionYear'];
+			$res->releaseDate = $movie['productionYear'].'-01-01';
 		else if (isset($movie['dvdReleaseDate']))
 			$res->releaseDate = $movie['dvdReleaseDate'];
 		$genres = array();
@@ -101,7 +104,7 @@ class AllocineConnector {
 			$genres[] = $v['$'];
 		}
 		$res->genres = implode(',', $genres);
-		return $res;
+		return $this->searchMovieFromAllocinePage($res, $id);
 	}
 	
 	public function getMovieInfosFromId($res) {
@@ -119,7 +122,7 @@ class AllocineConnector {
 		if (isset($movie['release']['releaseDate']))
 			$res->releaseDate = $movie['release']['releaseDate'];
 		else if (isset($movie['productionYear']))
-			$res->releaseDate = $movie['productionYear'];
+			$res->releaseDate = $movie['productionYear'].'-01-01';
 		else if (isset($movie['dvdReleaseDate']))
 			$res->releaseDate = $movie['dvdReleaseDate'];
 		$res->genres = array();
@@ -156,6 +159,23 @@ class AllocineConnector {
 			}
 		}
 		return $this->insertMultipleChoicesMovies($feed['movie']);
+	}
+
+	public function searchMovieFromAllocinePage($res, $id) {
+		$html = file_get_html("http://www.allocine.fr/film/fichefilm_gen_cfilm=$id.html");
+		$res->title = $html->find('meta[itemprop=name]', 0)->content;
+		$res->poster = $html->find('div.poster', 0)->find('img', 0)->src;
+		// $table = $html->find('div.expendTable', 0);
+		// if ($table) {
+		// 	foreach ($table->find('tr') as $v) {
+		// 		$tmp = $v->find('div');
+		// 		if (isset($tmp[0]) && $tmp[0]->innertext == "Titre original") {
+		// 			$res->originalTitle = $v->find('td', 0);
+		// 			break;
+		// 		}
+		// 	}
+		// }
+		return $res;
 	}
 
 	private function createAllocineResultFromSearch($movie) {

@@ -1,3 +1,7 @@
+html {
+	height: 100%;
+}
+
 body {
 	background: url("/images/pattern-background-3x3.png") repeat
 		scroll 0 0 rgba(0, 0, 0, 0);
@@ -5,6 +9,7 @@ body {
 	color: #34495e;
 	font-size: 1rem;
 	width: 100%;
+	height: 100%;
 	margin: 0;
 }
 
@@ -490,4 +495,87 @@ input[type="checkbox"] {
 
 .search-year {
 	color: #666;
+}
+
+/*
+* Movie infos
+*/
+
+#background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	background-color: black;
+	opacity: 0.7;
+	z-index: 1000;
+	width: 100%;
+}
+
+#movieInfos {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 2000;
+	width: 80%;
+	margin: auto;
+	background-color: white;
+}
+
+.poster {
+	display: inline-block;
+	width: 20%;
+	vertical-align: top;
+}
+
+.poster img {
+	max-width: 80%;
+}
+
+.infos {
+	display: inline-block;
+	vertical-align: top;
+	width: 80%;
+}
+
+.title, .originalTitle, .releaseDate, .actors, .directors, .pressRating, .userRating {
+	display: inline-block;
+	vertical-align: top;
+	width: 80%;
+	padding-left: 20px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box; /* Opera/IE 8+ */
+}
+
+.label {
+	width: 20%;
+	color: grey;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.originalTitle {
+	color: grey;
+}
+
+.rating {
+	width: 100px;
+	height: 17px;
+	background: url('../images/star-grey.png') repeat-x;
+	display: inline-block;
+}
+
+.rate {
+	height: 17px;
+	background: url('../images/star-colored.png') repeat-x;
+}
+
+.pressRating span, .userRating span {
+	font-size: 0.8em;
+	line-height: 17px;
+	vertical-align: top;
+	color: grey;
+	margin-left: 5px;
 }

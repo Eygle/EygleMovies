@@ -7,7 +7,7 @@ class MovieSearch {
 	private $search = null;
 
 	private $page = 1;
-	private $resPerPage = 25;
+	private $resPerPage = 24;
 
 	private $total;
 

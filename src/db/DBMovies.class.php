@@ -48,15 +48,6 @@ class DBMovies extends DAO {
 		return $res;
 	}
 
-	public function getMovieMult($id) {
-		$stmt = $this->pdo->prepare('SELECT mmc.*, m.file, m.path
-			FROM movies_multiple_choices AS mmc
-			LEFT JOIN movies AS m ON mmc.movieId = m.id
-			WHERE mmc.id = :id');
-		$stmt->execute(array('id' => $id));
-		return $stmt->fetch(PDO::FETCH_ASSOC);
-	}
-
 	public function getTotalMovies($search, $genres, $from, $nbr) {
 		$stmt = $this->pdo->prepare('SELECT COUNT(*) AS tot FROM movies AS m
 			'.($genres ? 'LEFT JOIN movies_genres AS mg ON m.id = mg.movieId WHERE mg.genreId IN('.$genres.')' : '').'
@@ -67,8 +58,48 @@ class DBMovies extends DAO {
 		return $res['tot'];
 	}
 
+	public function getMovieInfos($id) {
+		$stmt = $this->pdo->prepare('SELECT * FROM movies WHERE id = :id');
+		$stmt->execute(array('id'=>$id));
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		// Get genres
+		$stmt = $this->pdo->prepare('SELECT name FROM movies_genres AS mg LEFT JOIN genres AS g ON mg.genreId = g.id WHERE movieId = :id');
+		$stmt->execute(array('id' => $id));
+		$genres = array();
+		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) AS $v) {
+			$genres[] = $v['name'];
+		}
+		$res['genres'] = implode(',', $genres);
+
+		// Get people
+		$directors = array();
+		$actors = array();
+		$stmt = $this->pdo->prepare('SELECT name, role FROM movies_people AS mp LEFT JOIN people AS p ON mp.peopleId = p.id WHERE movieId = :id');
+		$stmt->execute(array('id' => $id));
+		foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) AS $v) {
+			if ($v['role'] == 'actor')
+				$actors[] = $v['name'];
+			else
+				$directors[] = $v['name'];
+		}
+		$res['genres'] = implode(',', $genres);
+		$res['directors'] = implode(',', $directors);
+		$res['actors'] = implode(',', $actors);
+		return $res;
+	}
+
 
 	##### ADMIN #####
+
+	public function getMovieMult($id) {
+		$stmt = $this->pdo->prepare('SELECT mmc.*, m.file, m.path
+			FROM movies_multiple_choices AS mmc
+			LEFT JOIN movies AS m ON mmc.movieId = m.id
+			WHERE mmc.id = :id');
+		$stmt->execute(array('id' => $id));
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
 
 	public function getMoviesMult() {
 		$stmt = $this->pdo->prepare('SELECT * FROM movies WHERE multipleChoices = 1');
@@ -80,6 +111,48 @@ class DBMovies extends DAO {
 			$res[$i]['choices'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}
 		return $res;
+	}
+
+	public function getMovie($id) {
+		$stmt = $this->pdo->prepare('SELECT *, id AS movieId FROM movies WHERE id = :id');
+		$stmt->execute(array('id' => $id));
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+
+	public function getUncompleteMovies() {
+		$stmt = $this->pdo->prepare('SELECT * FROM movies WHERE allocineId IS NULL');
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function removeMultiplesMovies($movieId) {
+		$stmt = $this->pdo->prepare('DELETE FROM movies_multiple_choices WHERE movieId = :movieId');
+		$stmt->execute(array('movieId'=>$movieId));
+	}
+
+	public function editMovie($movieId, $allocineId, $title, $originalTitle, $releaseDate, $pressRating, $userRating, $poster, $synopsis) {
+		$stmt = $this->pdo->prepare('UPDATE movies
+			SET allocineId = :allocineId,
+			title = :title,
+			originalTitle = :originalTitle,
+			releaseDate = :releaseDate,
+			pressRating = :pressRating,
+			userRating = :userRating,
+			poster = :poster,
+			synopsis = :synopsis,
+			multipleChoices = 0
+			WHERE id = :movieId');
+		$stmt->execute(array(
+			'movieId' => $movieId,
+			'allocineId' => $allocineId,
+			'title' => $title,
+			'originalTitle' => $originalTitle,
+			'releaseDate' => $releaseDate,
+			'pressRating' => $pressRating,
+			'userRating' => $userRating,
+			'poster' => $poster,
+			'synopsis' => $synopsis
+			));
 	}
 
 	##### INSERTIONS #####
