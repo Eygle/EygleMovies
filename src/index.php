@@ -118,7 +118,7 @@ foreach ($cssDependencies as $dep) {
 					if ($m['title']) {
 					echo '<div class="search-result" id="'.$m['id'].'">
 						<div class="search-poster">
-							<img src="'.$m['poster'].'" />
+							<img src="'. ($m['localPoster'] ? 'posters/'.$m['localPoster'] : $m['poster']) .'" />
 						</div><div class="search-infos">
 							<div class="search-title">'.$m['title'].'</div>
 							<div class="search-year">'.$m['year'].'</div>

@@ -248,4 +248,9 @@ class DBMovies extends DAO {
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}
+
+	public function addLocalPosterForMovie($movieId, $poster) {
+		$stmt = $this->pdo->prepare('UPDATE movies SET localPoster = :poster WHERE id = :id');
+		$stmt->execute(array('id'=>$movieId, 'poster' => $poster));
+	}
 }
