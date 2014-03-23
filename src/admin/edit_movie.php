@@ -1,6 +1,8 @@
 <?php
 
 require_once('db/DBMovies.class.php');
+require_once('utils/utils.php');
+require_once 'utils/HTTPClient.class.php';
 $db  = new DBMovies();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -19,11 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	if ($actors) $db->insertPeople($_POST['movieId'], $actors, 'actor');
 	$genres = explode(',', $_POST['genres']);
 	if ($genres) $db->insertGenres($_POST['movieId'], $genres);
+	if ($_POST['poster'] && !empty($_POST['poster'])) {
+		$http = new HTTPClient();
+		$localPosterName = formatFileNameFromTitle(!empty($_POST['title']) ? $_POST['title'] : $_POST['originalTitle']);
+		$localPosterName = $_POST['movieId'].'-'.$localPosterName.'.'.end(explode('.', $_POST['poster']));
+		$http->download($_POST['poster'], dirname(__FILE__).'/../posters/'.$localPosterName);
+		$db->addLocalPosterForMovie($_POST['movieId'], $localPosterName);
+	}
 	//if ($_GET['previousAction'] == 'multiple')
 	// 	$db->removeMultiplesMovies($_POST['movieId']);
-	if ($_GET['previousAction'] == 'view')
-		header('Location: index.php');
-	else
+	// if ($_GET['previousAction'] == 'view')
+		//header('Location: index.php');
+	// else
 		header('Location: admin.php?action='.$_GET['previousAction']);
 }
 
