@@ -471,7 +471,7 @@ input[type="checkbox"] {
 #movieInfos {
 	position: relative;
 	z-index: 2000;
-	width: 70%;
+	width: 90%;
 	padding: 25px;
 	margin: auto;
 	background-color: white;
@@ -487,13 +487,17 @@ input[type="checkbox"] {
 	cursor: pointer;
 }
 
-.edit {
+.admin {
 	position: absolute;
 	right: 10px;
 	bottom: 10px;
 	font-size: 0.8em;
 	color: grey;
-	cursor: pointer;
+	cursor: pointer;	
+}
+
+.edit {
+	padding-left: 10px;
 }
 
 .line {

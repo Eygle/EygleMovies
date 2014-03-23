@@ -101,7 +101,7 @@ foreach ($cssDependencies as $dep) {
 				<div class="line"><div class="label">Note des utilisateurs</div><div class="info userRating"></div></div>
 			</div>
 			<div class="synopsis"></div>
-			<a class="edit">Editer</a>
+			<div class="admin"><a class="refresh">Auto edition</a><a class="edit">Editer</a></div>
 		</div>
 	</div>
 	<div id="table-header">

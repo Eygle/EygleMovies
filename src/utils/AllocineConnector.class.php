@@ -61,7 +61,7 @@ class AllocineConnector {
 
 	private function performRequest($url){
 		$url = self::ENDPOINT.$url."&format=json&partner=".self::PARTNER;
-		echo "Performing allocine request $url\n";
+//		echo "Performing allocine request $url\n";
 		return $this->httpClient->request($url,HTTPClient::TTL_24_HOURS);
 	}
 

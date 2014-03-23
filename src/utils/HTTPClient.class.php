@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('MEMCACHE_ENABLED')) {
-	define('MEMCACHE_ENABLED', true);
+	define('MEMCACHE_ENABLED', false);
 }
 
 class HTTPClient {

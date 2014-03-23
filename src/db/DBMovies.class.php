@@ -200,7 +200,6 @@ class DBMovies extends DAO {
 
 	public function insertChoice($mId, $arr) {
 		$arr['mId'] = $mId;
-		// var_dump($arr);
 		$stmt = $this->pdo->prepare('INSERT INTO movies_multiple_choices(movieId, title, originalTitle, allocineId, pressRating, userRating, poster, actors, directors)
 			VALUES(:mId, :title, :originalTitle, :allocineId, :pressRating, :userRating, :poster, :actors, :directors)');
 		$stmt->execute($arr);
@@ -220,7 +219,6 @@ class DBMovies extends DAO {
 				$id = $this->pdo->lastInsertId();
 			}
 			$stmt = $this->pdo->prepare('INSERT IGNORE INTO movies_people(movieId, peopleId, role) VALUES(:mId, :pId, :role)');
-			echo "mId => $movieId, pId => $id, role => $role\n";
 			$stmt->execute(array('mId' => $movieId, 'pId' => $id, 'role' => $role));
 		}
 	}
