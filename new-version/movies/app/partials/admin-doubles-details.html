@@ -1,0 +1,14 @@
+<div class="movie-detail col-md-6" ng-repeat="movie in movies">
+    <div class="delete" ng-click="delete(movie)">delete</div>
+    <div class="movie-image col-md-4"><img src="posters/{{movie.localPoster}}" /></div>
+    <div class="movie-infos col-md-8">
+        <h1 class="col-md-12">{{movie.title}}</h1>
+        <div class="line"><div class="legend col-md-4">Fichier</div><div class="value col-md-8">{{movie.file}}</div></div>
+        <div class="line"><div class="legend col-md-4">Date de sortie</div><div class="value col-md-8">{{months[movie.releaseDate.getMonth()] + " " + movie.releaseDate.getFullYear()}}</div></div>
+        <div class="line" ng-if="movie.originalTitle"><div class="legend col-md-4">Titre original</div><div class="value col-md-8">{{movie.originalTitle}}</div></div>
+        <div class="line" ng-if="movie.pressRating"><div class="legend col-md-4">Note de la presse</div><div class="value col-md-8" style="display: table;"><div class="rate"><div class="rate-gold" style="width: {{movie.pressRating * 100 / 5}}%"></div></div>({{movie.pressRating.toFixed(1)}} / 5)</div></div>
+        <div class="line" ng-if="movie.userRating"><div class="legend col-md-4">Note des utilisateurs</div><div class="value col-md-8" style="display: table;"><div class="rate"><div class="rate-gold" style="width: {{movie.userRating * 100 / 5}}%"></div></div>({{movie.userRating.toFixed(1)}} / 5)</div></div>
+        <div class="line"><div class="value col-md-12" ng-bind-html="movie.synopsis | sanitize" style="text-align: justify;"></div></div>
+    </div>
+    <div class="col-md-2"></div>
+</div>

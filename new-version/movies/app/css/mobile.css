@@ -1,0 +1,34 @@
+@media screen and (max-width: 995px){
+    /* Ici du code s'appliquant aux écrans de moins de 480 pixels de large */
+    #left-menu {
+        display: none;
+        width: 80%;
+        position: fixed;
+        right: 0;
+        z-index: 9999;
+    }
+
+    #left-menu-icon {
+        display: block;
+        position: absolute;
+        right: 15px;
+        top: 0;
+        cursor: pointer;
+    }
+
+    .movie {
+        max-width: calc(50% - 10px);
+    }
+
+    .movie img {
+        max-width: 100%;
+    }
+
+    .movie-image {
+        text-align: center;
+    }
+
+    .movie-infos {
+        margin-top: 10px;
+    }
+}

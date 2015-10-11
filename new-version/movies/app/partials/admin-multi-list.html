@@ -1,0 +1,24 @@
+<div class="container-fluid" infinite-scroll="loadMore(false)" infinite-scroll-distance="1">
+  <div class="row">
+    <div class="col-md-2" id="left-menu">
+      <ul class="list">
+          <li class="list-item" ng-class="{active : item.active}" ng-repeat="item in menu">
+              <a href="#/admin/{{item.action}}">{{item.title}}<span ng-if="adminTotal"> ({{adminTotal[item.action]}})</span></a>
+          </li>
+      </ul>
+    </div>
+    <div class="col-md-2" style="visibility: hidden;"></div>
+    <div class="col-md-10">      
+      <div id="movies">
+          <div ng-repeat="movie in movies" class="mult-choices">
+              <h1>{{movie.file}}</h1>
+              <div class="admin-mult"><img src="img/delete.png" style="width:24px" ng-click="delete(movie)" /> - <span ng-click="chooseNone(movie)">(aucun)</span></div>
+              <div ng-repeat="choice in movie.choices" class="movie">
+                  <img ng-src="{{choice.poster}}" ng-click="chose(movie, choice)"/>
+                  <div class="title"><a href="http://www.allocine.fr/film/fichefilm_gen_cfilm={{choice.allocineId}}.html" target="_blank">{{choice.title.substr(0, 22)}}</a></div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="container-fluid" infinite-scroll="loadMore(false)" infinite-scroll-distance="1">
+    <div class="row">
+        <div class="col-md-2" id="left-menu">
+            <input ng-model="searchTerm" ng-change="loadMore(true);getTotalMovies();" placeholder="Rechercher" class="search">
+            <div class="infos">{{totalMovies}} films</div>
+            <ul class="list">
+                <li class="list-item" ng-class="{active : genre.active}" ng-repeat="genre in genres" ng-click="selectGenre(genre)">
+                    {{genre.name}}
+                </li>
+            </ul>
+            <div class="infos"><a href="#/admin">Panel Admin</a></div>
+        </div>
+        <div class="col-md-2" style="visibility: hidden;"></div>
+        <div class="col-md-10">
+            <div id="movies">
+                <div ng-repeat="movie in movies" class="movie">
+                    <a href="#/movies/{{movie.id}}">
+                        <img ng-src="posters/{{movie.localPoster}}" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,286 @@
+/* app css stylesheet */
+
+html {
+    height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #181816;
+  height: 100%;
+}
+
+#top {
+    z-index: 10000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+    
+    /* IE10+ */ 
+    background-image: -ms-linear-gradient(top, #282828 0%, #1D1D1D 100%);
+
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #282828 0%, #1D1D1D 100%);
+
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #282828 0%, #1D1D1D 100%);
+
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(100, #1D1D1D));
+
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #282828 0%, #1D1D1D 100%);
+
+    /* W3C Markup */ 
+    background-image: linear-gradient(to bottom, #282828 0%, #1D1D1D 100%);
+    
+    border-bottom: 1px solid black;
+}
+
+.top-button {
+    position: absolute;
+    left: 15px;
+}
+
+#left-menu-icon {
+    display: none;
+}
+
+.view-container {
+    margin-top: 50px;
+    min-height: 100%;
+}
+
+#left-menu {
+    background-color: #121212;
+    padding: 10px;
+    height: calc(100% - 50px);
+    position: fixed;
+    overflow-y: auto;
+}
+
+.search {
+    width: 100%;
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+.list {
+    margin-top: 5px;
+    padding: 0px;
+}
+
+.list-item {
+    text-decoration: none;
+    list-style: none;
+    color: #a6a6a6;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 3px;
+    padding-left: 20px;
+    cursor: pointer;
+    display: block;
+}
+
+#left-menu a {
+    color: #a6a6a6;
+}
+
+#left-menu .active {
+    color: white;
+    border-radius: 5px;
+    
+    /* IE10+ */ 
+    background-image: -ms-linear-gradient(top, #4A70AE 0%, #265799 100%);
+
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #4A70AE 0%, #265799 100%);
+
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #4A70AE 0%, #265799 100%);
+
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #4A70AE), color-stop(100, #265799));
+
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #4A70AE 0%, #265799 100%);
+
+    /* W3C Markup */ 
+    background-image: linear-gradient(to bottom, #4A70AE 0%, #265799 100%);
+}
+
+#left-menu .active a {
+    color: white;
+}
+
+#left-menu a:hover {
+    text-decoration: none;
+}
+
+#left-menu::-webkit-scrollbar{
+    width:10px;
+    background-color:#383836;
+}
+
+#left-menu::-webkit-scrollbar-thumb{
+    background-color:#000000;
+}
+#left-menu::-webkit-scrollbar-thumb:hover{
+    background-color:#111;
+}
+#left-menu::-webkit-scrollbar-thumb:active{
+    background-color:#222;
+}
+
+.infos {
+    color: #aaaaaa;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#movies {
+  padding: 10px;
+    text-align: center;
+}
+
+.movie {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.movie img {
+    width: 160px;
+    height: 213px;
+}
+
+.movie .title {
+    margin-top: 5px;
+    color: white;
+}
+
+.movie-detail {
+    margin: auto;
+    margin-top: 15px;
+}
+
+.movie-image {
+    text-align: right;
+}
+
+.movie-image img {
+    max-width: 300px;
+}
+
+h1 {
+    color: white;
+    font-size: 1.5em;
+    margin: 0;
+    margin-bottom: 8px;
+    clear: both;
+}
+
+.line {
+    padding: 3px;
+}
+
+.legend {
+    display: inline-block;
+    color: #999997;
+}
+
+.value {
+    display: inline-block;
+    color: white;
+}
+
+.rate {
+    width: 100px;
+    height: 17px;
+    position: relative;
+    display: inline-block;
+    background-image: url('../img/star-grey.png');
+    margin-right: 5px;
+}
+
+.rate-gold {
+    height: 17px;
+    position: absolute;
+    background-image: url('../img/star-colored.png');
+}
+
+.delete {
+    z-index: 1000;
+    position: absolute;
+    right: 25px;
+    color: white;
+    cursor: pointer;
+}
+
+.edit-movie .legend, .edit-movie .value {
+    margin-top: 10px;
+}
+
+.edit-movie input {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.edit-movie textarea {
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+}
+
+.edit-movie button {
+    margin-top: 20px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.admin {
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 25px;
+    top: 10px;
+}
+
+.admin-mult {
+    color: white;
+}
+
+.admin-mult span, .admin-mult img {
+    cursor: pointer;
+}
+
+.edit {
+    color: white;
+}
+
+.panel-admin-item {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.panel-admin-item a, .panel-admin-item a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.info-pop {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    z-index: 11000;
+    font-size: 1em;
+}

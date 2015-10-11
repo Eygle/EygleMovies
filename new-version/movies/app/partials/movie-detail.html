@@ -1,0 +1,34 @@
+<div class="container-fluid" infinite-scroll="loadMore(false)" infinite-scroll-distance="1">
+    <div class="row">
+        <div class="col-md-2" id="left-menu" >
+            <ul class="list">
+                <li class="list-item"><a href="#/admin/edit/{{movie.id}}">Modifier</a></li>
+                <li class="list-item"><a href="" ng-click="delete(movie)">Supprimer</a></li>
+                <li class="list-item"><a href="#/admin">Panel Admin</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2" style="visibility: hidden;"></div>
+        <div class="col-md-10">
+            <div class="movie-detail">
+                <div class="movie-image col-md-3"><img src="{{movie.image}}" /></div>
+                <div class="movie-infos col-md-7">
+                    <h1>{{movie.title}}</h1>
+                    <div class="row"><div class="legend col-md-3">Date de sortie</div><div class="value col-md-9">{{months[movie.date.getMonth()] + " " + movie.date.getFullYear()}}</div></div>
+                    <div class="row" ng-if="movie.originalTitle"><div class="legend col-md-3">Titre original</div><div class="value col-md-9">{{movie.originalTitle}}</div></div>
+
+                    <div class="row" ng-if="movie.genres"><div class="legend col-md-3">Genres</div><div class="value col-md-9">{{movie.genres}}</div></div>
+                    <div class="row" ng-if="movie.directors"><div class="legend col-md-3">Réalisateurs</div><div class="value col-md-9">{{movie.directors}}</div></div>
+                    <div class="row" ng-if="movie.actors"><div class="legend col-md-3">Acteurs</div><div class="value col-md-9">{{movie.actors}}</div></div>
+
+                    <div class="row" ng-if="movie.pressRating"><div class="legend col-md-3">Note de la presse</div><div class="value col-md-9" style="display: table;"><div class="rate"><div class="rate-gold" style="width: {{movie.pressRating * 100 / 5}}%"></div></div>({{movie.pressRating.toFixed(1)}} / 5)</div></div>
+                    <div class="row" ng-if="movie.userRating"><div class="legend col-md-3">Note des utilisateurs</div><div class="value col-md-9" style="display: table;"><div class="rate"><div class="rate-gold" style="width: {{movie.userRating * 100 / 5}}%"></div></div>({{movie.userRating.toFixed(1)}} / 5)</div></div>
+
+                    <div class="row" ng-if="movie.file"><div class="legend col-md-3">Fichier</div><div class="value col-md-9">{{movie.file}}</div></div>
+
+                    <div class="row"><div class="value col-md-12" ng-bind-html="movie.synopsis | sanitize" style="text-align: justify;"></div></div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+</div>

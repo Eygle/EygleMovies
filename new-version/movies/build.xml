@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Eygle's Movies" default="deploy">
+    <target name="init.properties">
+        <buildnumber />
+        <property name="scp.host.online" value="195.154.91.110" />
+    </target>
+
+    <target name="deploy" depends="init.properties">
+        <scp todir="eygle@${scp.host.online}:/var/www/movies" trust="true" keyfile="/home/eygle/.ssh/id_rsa" verbose="true" sftp="true" failonerror="false">
+            <fileset dir="app">
+                <modified>
+                    <param name="cache.cachefile" value="ant.cache" />
+                </modified>
+                <exclude name="**/posters/**" />
+                <exclude name="**/nbrs" />
+                <include name="**/**" />
+            </fileset>
+        </scp>
+        <scp file="dbconfig-online.php" todir="eygle@${scp.host.online}:/var/www/movies/php/db/dbconfig.php" trust="true" keyfile="/home/eygle/.ssh/id_rsa"
+             verbose="true" sftp="true" failonerror="false" />
+    </target>
+</project>

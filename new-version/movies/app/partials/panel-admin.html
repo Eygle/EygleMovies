@@ -1,0 +1,15 @@
+<div class="container-fluid" infinite-scroll="loadMore(false)" infinite-scroll-distance="1">
+  <div class="row">
+    <div class="col-md-2" id="left-menu" >
+      <ul class="list">
+          <li class="list-item" ng-class="{active : item.active}" ng-repeat="item in menu">
+              <a href="#/admin/{{item.action}}">{{item.title}}<span ng-if="adminTotal"> ({{adminTotal[item.action]}})</span></a>
+          </li>
+      </ul>
+    </div>
+      <div class="col-md-2" style="visibility: hidden;"></div>
+    <div class="col-md-10">
+        <div class="panel-admin-item" ng-repeat="item in menu" ng-if="adminTotal[item.action] > 0"><a href="#/admin/{{item.action}}">{{item.title}}</a></h1>
+    </div>
+  </div>
+</div>

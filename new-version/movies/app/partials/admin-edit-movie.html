@@ -1,0 +1,45 @@
+<div class="container-fluid edit-movie">
+  <div class="row">
+    <div class="col-md-2" id="left-menu">
+      <ul class="list">
+          <li class="list-item" ng-class="{active : item.active}" ng-repeat="item in menu">
+              <a href="#/admin/{{item.action}}">{{item.title}}<span ng-if="adminTotal"> ({{adminTotal[item.action]}})</span></a>
+          </li>
+      </ul>
+    </div>
+    <div class="col-md-2" style="visibility: hidden;"></div>
+
+    <div class="movie-detail col-md-4">
+        <div class="row"><div class="legend col-md-4">AllocineId</div><div class="col-md-6"><input type="text" ng-model="movie.allocineId" /></div><div class="col-md-2 value pointer" ng-click="getAllocineInfos(movie.allocineId)">Charger</div></div>
+        <div class="row"><div class="legend col-md-6">Poster</div><div class="col-md-6"><input type="text" ng-model="movie.poster" /></div></div>
+        <div class="row"><div class="legend col-md-6">Titre</div><div class="col-md-6"><input type="text" ng-model="movie.title" /></div></div>
+        <div class="row"><div class="legend col-md-6">Titre original</div><div class="col-md-6"><input type="text" ng-model="movie.originalTitle" /></div></div>
+        <div class="row"><div class="legend col-md-6">Date de sortie</div><div class="col-md-6"><input type="text" ng-model="movie.releaseDate" /></div></div>
+        <div class="row"><div class="legend col-md-6">Genres</div><div class="col-md-6"><input type="text" ng-model="movie.genres" /></div></div>
+        <div class="row"><div class="legend col-md-6">Réalisateurs</div><div class="col-md-6"><input type="text" ng-model="movie.directors" /></div></div>
+        <div class="row"><div class="legend col-md-6">Acteurs</div><div class="col-md-6"><input type="text" ng-model="movie.actors" /></div></div>
+        <div class="row"><div class="legend col-md-6">Note de presse</div><div class="col-md-6"><input type="number" ng-model="movie.pressRating" /></div></div>
+        <div class="row"><div class="legend col-md-6">Note des utilisateurs</div><div class="col-md-6"><input type="number" ng-model="movie.userRating" /></div></div>
+        <div class="row"><div class="legend col-md-6">Synopsis</div><div class="col-md-6"><textarea ng-model="movie.synopsis" /></div></div>
+        <div class="row"><div class="col-md-2"> </div><div class="col-md-3"><button ng-click="save()">Enregistrer</button></div><div class="col-md-5"><button ng-click="saveAndReloadImage()">Enregistrer et ecraser l'image</button></div><div class="col-md-2"> </div></div>
+    </div>
+    <div class="movie-detail col-md-6">
+        <div class="movie-image col-md-4"><img src="{{movie.poster}}" /></div>
+        <div class="movie-infos col-md-8">
+            <h1 class="col-md-12">{{movie.title}}</h1>
+            <div class="row"><div class="legend col-md-4">Fichier</div><div class="value col-md-8">{{movie.file}}</div></div>
+            <div class="row" ng-if="movie.releaseDate"><div class="legend col-md-4">Date de sortie</div><div class="value col-md-8">{{movie.releaseDate}}</div></div>
+
+            <div class="row" ng-if="movie.genres"><div class="legend col-md-4">Genres</div><div class="value col-md-8">{{movie.genres}}</div></div>
+            <div class="row" ng-if="movie.directors"><div class="legend col-md-4">Réalisateurs</div><div class="value col-md-8">{{movie.directors}}</div></div>
+            <div class="row" ng-if="movie.actors"><div class="legend col-md-4">Acteurs</div><div class="value col-md-8">{{movie.actors}}</div></div>
+
+            <div class="row" ng-if="movie.originalTitle"><div class="legend col-md-4">Titre original</div><div class="value col-md-8">{{movie.originalTitle}}</div></div>
+            <div class="row" ng-if="movie.pressRating"><div class="legend col-md-4">Note de la presse</div><div class="value col-md-8" style="display: table;"><div class="rate"><div class="rate-gold" style="width: {{movie.pressRating * 100 / 5}}%"></div></div>({{movie.pressRating.toFixed(1)}} / 5)</div></div>
+            <div class="row" ng-if="movie.userRating"><div class="legend col-md-4">Note des utilisateurs</div><div class="value col-md-8" style="display: table;"><div class="rate"><div class="rate-gold" style="width: {{movie.userRating * 100 / 5}}%"></div></div>({{movie.userRating.toFixed(1)}} / 5)</div></div>
+            <div class="row"><div class="value col-md-12" ng-bind-html="movie.synopsis | sanitize" style="text-align: justify;"></div></div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>

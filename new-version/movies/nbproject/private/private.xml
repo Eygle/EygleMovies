@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/var/www/movies/app/partials/admin-edit-movie.html</file>
+            <file>file:/var/www/movies/app/php/db/DBMovies.class.php</file>
+            <file>file:/var/www/movies/app/php/utils/AllocineConnector.class.php</file>
+            <file>file:/var/www/movies/app/php/api/api.php</file>
+            <file>file:/var/www/movies/app/partials/admin-multi-list.html</file>
+            <file>file:/var/www/movies/app/css/app.css</file>
+            <file>file:/var/www/movies/app/js/controllers.js</file>
+            <file>file:/var/www/movies/app/php/utils/HTTPClient.class.php</file>
+        </group>
+    </open-files>
+</project-private>
