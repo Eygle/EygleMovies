@@ -17,7 +17,7 @@ if ($argv[1]) {
         }
 	$name = $v['title'];
 	if (!$name) $name = $v['originalTitle'];
-	$name = $v['id'].'-'.formatFileNameFromTitle($name).'.'.end(explode('.', $v['poster']));
+	$name = $v['id'].'-'.formatFileNameFromTitle($name).'-'.time().'.'.end(explode('.', $v['poster']));
         $http->download($v['poster'], dirname(__FILE__).'/../posters/'.$name);
         $db->addLocalPosterForMovie($v['id'], $name);
         return;
@@ -28,7 +28,7 @@ foreach ($posters as $v) {
 	$name = $v['title'];
 	if (!$name) $name = $v['originalTitle'];
 	echo "Process: $name\n";
-	$name = $v['id'].'-'.formatFileNameFromTitle($name).'.'.end(explode('.', $v['poster']));
+	$name = $v['id'].'-'.formatFileNameFromTitle($name).'-'.time().'.'.end(explode('.', $v['poster']));
         if (file_exists(dirname(__FILE__).'/../posters/'.$name)) {
             continue;
         }

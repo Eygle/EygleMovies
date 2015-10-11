@@ -4,8 +4,6 @@
 
 var moviesControllers = angular.module('moviesControllers', ['infinite-scroll']);
 
-
-
 function showInfo(text, isError) {
     $(".info-pop").addClass(isError ? "label-danger" : "label-success").removeClass(isError ? "label-success" : "label-danger").text(text).show();
     setTimeout(function() {
@@ -125,7 +123,13 @@ moviesControllers.controller('MovieDetailCtrl', ['$scope', '$routeParams', '$htt
         };
     }]);
 
-var adminMenu = [{title:'Doublons', action:'doubles'}, {title:'Multi résultats', action:'multi'}, {title:'Films incomplets', action:'uncomplete'}, {title:'Corbeille', action:'trash'}];
+var adminMenu = [
+    {title:'To validate', action:'validate'},
+    {title:'Doublons', action:'doubles'},
+    {title:'Multi résultats', action:'multi'},
+    {title:'Films incomplets', action:'uncomplete'},
+    {title:'Corbeille', action:'trash'}];
+
 var unActivateMenu = function() {
     for (var i in adminMenu) {
         adminMenu[i].active = false;
@@ -152,7 +156,7 @@ moviesControllers.controller('adminDoublesListCtrl', ['$scope', '$http',
         $scope.menu = adminMenu;
         unActivateMenu();
         getAdminTotal($http, $scope);
-        $scope.menu[0].active = true;
+        $scope.menu[1].active = true;
         $scope.movies = [];
 
         $http.get('php/api/api.php?action=get-doubles').success(function(data) {
@@ -198,7 +202,7 @@ moviesControllers.controller('adminMultiListCtrl', ['$scope', '$http', '$routePa
         $scope.menu = adminMenu;
         unActivateMenu();
         getAdminTotal($http, $scope);
-        $scope.menu[1].active = true;
+        $scope.menu[2].active = true;
 
         $scope.movies = [];
 
@@ -251,7 +255,7 @@ moviesControllers.controller('adminUncompleteListCtrl', ['$scope', '$http',
         $scope.menu = adminMenu;
         unActivateMenu();
         getAdminTotal($http, $scope);
-        $scope.menu[2].active = true;
+        $scope.menu[3].active = true;
 
         $scope.movies = [];
 
@@ -269,7 +273,7 @@ moviesControllers.controller('adminEditMovieCtrl', ['$scope', '$http', '$routePa
         $scope.menu = adminMenu;
         unActivateMenu();
         getAdminTotal($http, $scope);
-        $scope.menu[2].active = true;
+        $scope.menu[3].active = true;
 
         $scope.months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Décembre"];
         $scope.movie = {};
@@ -328,7 +332,7 @@ moviesControllers.controller('adminTrashCtrl', ['$scope', '$http',
         $scope.menu = adminMenu;
         unActivateMenu();
         getAdminTotal($http, $scope);
-        $scope.menu[3].active = true;
+        $scope.menu[4].active = true;
 
         $scope.nbrPerPage = 50;
         $scope.movies = [];

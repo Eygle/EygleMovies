@@ -62,6 +62,9 @@ try {
                 case 'get-multi':
                     echo json_encode($db->getMoviesMult());
                     break;
+                case 'get-to-validate':
+                    echo json_encode($db->getMoviesToValidate());
+                    break;
                 case 'get-uncomplete':
                     echo json_encode($db->getUncompleteMovies());
                     break;
@@ -116,9 +119,7 @@ try {
                     editMovie($id);
                     
                     $logs = array();
-                    echo "php ".dirname(__FILE__)."/../scriptGetPosters.php " . $id;
                     exec("php ".dirname(__FILE__)."/../scriptGetPosters.php " . $id, $logs);
-                    var_dump($logs);
                     break;
                 case 'delete-mult':
                     if (isset($_POST['remove-movie'])) {

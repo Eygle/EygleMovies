@@ -12,6 +12,7 @@
         </div>
         <div class="col-md-2" style="visibility: hidden;"></div>
         <div class="col-md-10">
+            <input id="search-mobile" ng-model="searchTerm" ng-change="loadMore(true);getTotalMovies();" placeholder="Rechercher" class="search">
             <div id="movies">
                 <div ng-repeat="movie in movies" class="movie">
                     <a href="#/movies/{{movie.id}}">

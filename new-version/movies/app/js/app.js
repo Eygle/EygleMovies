@@ -4,11 +4,9 @@
 
 var EygleMoviesApp = angular.module('EygleMoviesApp', [
   'ngRoute',
-  'moviesAnimations',
 
   'moviesControllers',
-  'moviesFilters',
-  'moviesServices'
+  'moviesFilters'
 ]);
 
 EygleMoviesApp.config(['$routeProvider',

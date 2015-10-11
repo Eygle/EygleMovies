@@ -6,7 +6,7 @@
     </target>
 
     <target name="deploy" depends="init.properties">
-        <scp todir="eygle@${scp.host.online}:/var/www/movies" trust="true" keyfile="/home/eygle/.ssh/id_rsa" verbose="true" sftp="true" failonerror="false">
+        <scp todir="eygle@${scp.host.online}:/var/www/movies" trust="true" keyfile="D:\Documents\Johan\.ssh\id_rsa" verbose="true" sftp="true" failonerror="false">
             <fileset dir="app">
                 <modified>
                     <param name="cache.cachefile" value="ant.cache" />
@@ -16,7 +16,7 @@
                 <include name="**/**" />
             </fileset>
         </scp>
-        <scp file="dbconfig-online.php" todir="eygle@${scp.host.online}:/var/www/movies/php/db/dbconfig.php" trust="true" keyfile="/home/eygle/.ssh/id_rsa"
+        <scp file="dbconfig-online.php" todir="eygle@${scp.host.online}:/var/www/movies/php/db/dbconfig.php" trust="true" keyfile="D:\Documents\Johan\.ssh\id_rsa"
              verbose="true" sftp="true" failonerror="false" />
     </target>
 </project>

@@ -8,6 +8,15 @@
         z-index: 9999;
     }
 
+    #search-mobile {
+        display: block;
+        margin-top: 10px;
+    }
+
+    #left-menu .search {
+        display: none;
+    }
+
     #left-menu-icon {
         display: block;
         position: absolute;
