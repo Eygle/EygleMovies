@@ -18,10 +18,10 @@
     </target>
 
     <target name="prepare" depends="clean" description="Prepare for build">
-        <mkdir dir="${basedir}/build/src" />
+        <mkdir dir="${basedir}/build/app" />
 
-        <copy todir="${basedir}/build/src">
-            <fileset dir="${basedir}/src">
+        <copy todir="${basedir}/build/app">
+            <fileset dir="${basedir}/app">
                 <include name="**/**" />
             </fileset>
         </copy>
@@ -33,10 +33,11 @@
             <include name="**/**" />
         </delete>
         <copy todir="${local.www.dir}">
-            <fileset dir="${basedir}/src">
+            <fileset dir="${basedir}/app">
                 <include name="**/**" />
             </fileset>
         </copy>
+        <copy file="dbconfig-local.php" tofile="${local.www.dir}/php/db/dbconfig.php"/>
     </target>
 
     <target name="deploy" depends="init.properties">
