@@ -113,7 +113,10 @@ moviesControllers.controller('MovieDetailCtrl', ['$scope', '$routeParams', '$htt
             console.log("delete");
             var title = movie.title ? movie.title : (movie.originalTitle ? movie.originalTitle : movie.file);
             if (confirm("Voulez vous supprimer " + title + " ?")) {
-                $.post('php/api/api.php', {action:'delete-movie', id: movie.id}, function() {
+                $http.post('php/api/api.php', {
+                    action:'delete-movie',
+                    id: movie.id
+                }).success(function() {
                     showInfo("Success", false);
                     $window.history.back();
                 }).fail(function() {
@@ -142,12 +145,43 @@ var getAdminTotal = function($http, $scope) {
     });
 };
 
-moviesControllers.controller('panelAdminCtrl', ['$scope', '$http', '$location',
-    function($scope, $http, $location) {
+moviesControllers.controller('panelAdminCtrl', ['$scope', '$http',
+    function($scope, $http) {
         $scope.menuTotal = null;
         $scope.menu = adminMenu;
         unActivateMenu();
         getAdminTotal($http, $scope);
+    }]);
+
+moviesControllers.controller('adminValidateListCtrl', ['$scope', '$http',
+    function($scope, $http) {
+        $scope.menuTotal = null;
+        $scope.menu = adminMenu;
+        unActivateMenu();
+        getAdminTotal($http, $scope);
+        $scope.menu[0].active = true;
+        $scope.movies = [];
+
+
+        $scope.refresh = function() {
+            $http.get('php/api/api.php', {
+                params: {
+                    'action': 'get-to-validate'
+                }
+            }).success(function(data) {
+                $scope.movies = data;
+            });
+        };
+        $scope.refresh();
+
+        $scope.validate = function(movieId) {
+            $http.post('php/api/api.php', {
+                action: "validate-movie",
+                'movie-id': movieId
+            }).success(function () {
+                $scope.refresh();
+            });
+        };
     }]);
 
 moviesControllers.controller('adminDoublesListCtrl', ['$scope', '$http',
@@ -185,7 +219,10 @@ moviesControllers.controller('adminDoublesDetailCtrl', ['$scope', '$http', '$rou
 
         $scope.delete = function(movie) {
             if (confirm("Supprimer " + movie.file + " ?")) {
-                $.post('php/api/api.php', {action:'delete-movie', id:movie.id}, function() {
+                $http.post('php/api/api.php', {
+                    action:'delete-movie',
+                    id:movie.id
+                    }).success(function() {
                     $scope.movies = [];
                     $scope.load();
                     showInfo("Success", false);
@@ -215,7 +252,11 @@ moviesControllers.controller('adminMultiListCtrl', ['$scope', '$http', '$routePa
 
         $scope.chose = function(movie, choice) {
             if (confirm('Choisir le film ' + choice.title + " pour le fichier " + movie.file + " ?")) {
-                $.post('php/api/api.php', {action:'choose-multi-item', 'movie-id': movie.id, 'choice-id': choice.id}, function() {
+                $http.post('php/api/api.php', {
+                    action:'choose-multi-item',
+                    'movie-id': movie.id,
+                    'choice-id': choice.id
+                }).success(function() {
                     $scope.load();
                     showInfo("Success", false);
                 }).fail(function() {
@@ -226,7 +267,10 @@ moviesControllers.controller('adminMultiListCtrl', ['$scope', '$http', '$routePa
 
         $scope.chooseNone = function(movie) {
             if (confirm('Aucun de ces choix n\'est le bon ?')) {
-                $.post('php/api/api.php', {action:'delete-mult', 'movie-id': movie.id}, function() {
+                $http.post('php/api/api.php', {
+                    action:'delete-mult',
+                    'movie-id': movie.id
+                }).success(function() {
                     console.log('redirect');
                     $location.path('/admin/edit/' + movie.id);
                     if(!$scope.$$phase) $scope.$apply();
@@ -239,7 +283,11 @@ moviesControllers.controller('adminMultiListCtrl', ['$scope', '$http', '$routePa
 
         $scope.delete = function(movie) {
             if (confirm('Supprimer ' + movie.file + " ?")) {
-                $.post('php/api/api.php', {action:'delete-mult', 'movie-id': movie.id, 'remove-movie': true}, function() {
+                $http.post('php/api/api.php', {
+                    action:'delete-mult',
+                    'movie-id': movie.id,
+                    'remove-movie': true
+                }).success(function() {
                     $scope.load();
                     showInfo("Success", false);
                 }).fail(function() {
@@ -307,7 +355,7 @@ moviesControllers.controller('adminEditMovieCtrl', ['$scope', '$http', '$routePa
 
         $scope.save = function() {
             $scope.movie["action"] = "edit-movie";
-            $.post('php/api/api.php', $scope.movie, function() {
+            $http.post('php/api/api.php', $scope.movie).success(function() {
                 $window.history.back();
                 showInfo("Success", false);
             }).fail(function() {
@@ -317,7 +365,8 @@ moviesControllers.controller('adminEditMovieCtrl', ['$scope', '$http', '$routePa
 
         $scope.saveAndReloadImage = function() {
             $scope.movie["action"] = "edit-movie-reload-image";
-            $.post('php/api/api.php', $scope.movie, function() {
+            $http.post('php/api/api.php', $scope.movie)
+                .success(function() {
                 $window.history.back();
                 showInfo("Success", false);
             }).fail(function() {

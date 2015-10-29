@@ -204,6 +204,18 @@ class DBMovies extends DAO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getTotalMoviesToValidate() {
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) AS tot FROM movies WHERE multipleChoices = -1');
+        $stmt->execute();
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return intval($res["tot"]);
+    }
+
+    public function validateMovie($movieId) {
+        $stmt = $this->pdo->prepare("UPDATE movies SET multipleChoices = 0 WHERE id = :id");
+        $stmt->execute(array("id" => $movieId));
+    }
+
     public function getUncompleteMovies()
     {
         $stmt = $this->pdo->prepare('SELECT * FROM movies WHERE (allocineId IS NULL OR allocineId < 0) AND multipleChoices = 0 AND trash = 0');

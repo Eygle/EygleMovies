@@ -24,6 +24,10 @@ EygleMoviesApp.config(['$routeProvider',
         templateUrl: 'partials/panel-admin.html',
         controller: 'panelAdminCtrl'
       }).
+        when('/admin/validate', {
+          templateUrl: 'partials/admin-to-validate-list.html',
+          controller: 'adminValidateListCtrl'
+        }).
       when('/admin/doubles', {
         templateUrl: 'partials/admin-doubles-list.html',
         controller: 'adminDoublesListCtrl'

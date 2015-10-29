@@ -4,20 +4,20 @@ require_once dirname(__FILE__) . '/../db/DBMovies.class.php';
 
 $db = new DBMovies();
 
-function editMovie($id) {
+function editMovie($id, $request) {
     global $db;
     
-    $allocineId = isset($_POST['allocineId']) ? $_POST['allocineId'] : null;
-    $title = isset($_POST['title']) ? $_POST['title'] : null;
-    $originalTitle = isset($_POST['originalTitle']) ? $_POST['originalTitle'] : null;
-    $releaseDate = isset($_POST['releaseDate']) ? $_POST['releaseDate'] : null;
-    $pressRating = isset($_POST['pressRating']) ? $_POST['pressRating'] : null;
-    $userRating = isset($_POST['userRating']) ? $_POST['userRating'] : null;
-    $poster = isset($_POST['poster']) ? $_POST['poster'] : null;
-    $synopsis = isset($_POST['synopsis']) ? $_POST['synopsis'] : null;
-    $actors = isset($_POST['actors']) ? explode(',', $_POST['actors']) : null;
-    $directors = isset($_POST['directors']) ? explode(',', $_POST['directors']) : null;
-    $genres = isset($_POST['genres']) ? explode(',', $_POST['genres']) : null;
+    $allocineId = isset($request['allocineId']) ? $request['allocineId'] : null;
+    $title = isset($request['title']) ? $request['title'] : null;
+    $originalTitle = isset($request['originalTitle']) ? $request['originalTitle'] : null;
+    $releaseDate = isset($request['releaseDate']) ? $request['releaseDate'] : null;
+    $pressRating = isset($request['pressRating']) ? $request['pressRating'] : null;
+    $userRating = isset($request['userRating']) ? $request['userRating'] : null;
+    $poster = isset($request['poster']) ? $request['poster'] : null;
+    $synopsis = isset($request['synopsis']) ? $request['synopsis'] : null;
+    $actors = isset($request['actors']) ? explode(',', $request['actors']) : null;
+    $directors = isset($request['directors']) ? explode(',', $request['directors']) : null;
+    $genres = isset($request['genres']) ? explode(',', $request['genres']) : null;
 
     $db->editMovie($id, $allocineId,
             $title, $originalTitle,
@@ -93,6 +93,7 @@ try {
                     break;
                 case 'get-admin-total':
                     $res = array(
+                        "validate" => $db->getTotalMoviesToValidate(),
                         "doubles" => $db->getTotalDoubleMovies(),
                         "multi" => $db->getTotalMoviesMult(),
                         "uncomplete" => $db->getTotalUncompleteMovies(),
@@ -103,31 +104,36 @@ try {
             }
             break;
         case 'POST':
-            switch ($_POST['action']) {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata, true);
+            switch ($request['action']) {
                 case 'delete-movie':
-                    $db->deleteMovie($_POST['id']);
+                    $db->deleteMovie($request['id']);
                     break;
                 case 'choose-multi-item':
-                    $db->chooseMovie($_POST['movie-id'], $_POST['choice-id']);
+                    $db->chooseMovie($request['movie-id'], $request['choice-id']);
+                    break;
+                case 'validate-movie':
+                    $db->validateMovie($request["movie-id"]);
                     break;
                 case 'edit-movie':
-                    $id = $_POST['id'];
-                    editMovie($id);
+                    $id = $request['id'];
+                    editMovie($i, $request);
                     break;
                 case 'edit-movie-reload-image':
-                    $id = $_POST['id'];
-                    editMovie($id);
+                    $id = $request['id'];
+                    editMovie($id, $request);
                     
                     $logs = array();
                     exec("php ".dirname(__FILE__)."/../scriptGetPosters.php " . $id, $logs);
                     break;
                 case 'delete-mult':
-                    if (isset($_POST['remove-movie'])) {
-                        $db->removeMovie($_POST['movie-id']);
+                    if (isset($request['remove-movie'])) {
+                        $db->removeMovie($request['movie-id']);
                     } else {
-                        $db->setMovieNotMultiple($_POST['movie-id']);
+                        $db->setMovieNotMultiple($request['movie-id']);
                     }
-                    $db->removeMultiplesMovies($_POST['movie-id']);
+                    $db->removeMultiplesMovies($request['movie-id']);
                     break;
             }
             break;
